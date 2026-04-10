@@ -95,7 +95,6 @@ def load_artifacts():
     encoders     = joblib.load('label_encoders.pkl')
     target_enc   = joblib.load('target_encoder.pkl')
     feature_cols = joblib.load('feature_cols.pkl')
-    # Load real feature importances saved by train_model.py
     fi_path = 'feature_importances.pkl'
     fi = joblib.load(fi_path) if os.path.exists(fi_path) else None
     return model, encoders, target_enc, feature_cols, fi
@@ -117,7 +116,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# ── Feature Importance Section (always visible at top) ────────────────────────
+# ── Feature Importance Section ────────────────────────────────────────────────
 if fi is not None:
     st.markdown('<div class="section-card">', unsafe_allow_html=True)
     st.markdown('<p class="section-label">🌟 Why These Fields Matter</p>'
@@ -127,12 +126,11 @@ if fi is not None:
     fi_sorted = fi.sort_values(ascending=False)
     max_val   = fi_sorted.max()
 
-    # Color tiers
     def fi_color(val):
-        if val == max_val:                      return '#f87171'   # red   = top
-        elif val >= fi_sorted.quantile(0.75):   return '#4fc3f7'   # blue  = high
-        elif val >= fi_sorted.quantile(0.5):    return '#a78bfa'   # purple= mid
-        else:                                   return '#6366f1'   # indigo= low
+        if val == max_val:                      return '#f87171'
+        elif val >= fi_sorted.quantile(0.75):   return '#4fc3f7'
+        elif val >= fi_sorted.quantile(0.5):    return '#a78bfa'
+        else:                                   return '#6366f1'
 
     rows_html = ""
     for feat, val in fi_sorted.items():
@@ -149,7 +147,6 @@ if fi is not None:
 
     st.markdown(rows_html, unsafe_allow_html=True)
 
-    # Legend
     st.markdown("""
     <div style="display:flex;gap:18px;margin-top:14px;flex-wrap:wrap;font-size:0.78rem;">
       <span style="color:#f87171;">● Most Important</span>
@@ -169,19 +166,20 @@ st.markdown('<p class="section-label">Step 01</p>'
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    age         = st.slider("🎂 Age",                   18, 24, 21)
+    age         = st.slider("🎂 Age",                   5, 55, 21)
     gender      = st.selectbox("👤 Gender",             ["Male", "Female"])
     degree      = st.selectbox("🎓 Degree",             ["B.Tech", "BCA", "MCA", "B.Sc"])
     branch      = st.selectbox("🏫 Branch",             ["CSE", "ECE", "ME", "Civil", "IT"])
-    cgpa        = st.slider("📊 CGPA",                  4.5, 9.8, 7.0, step=0.1, format="%.1f")
+    # FIX 1: min and max must be float (0.0, 10.0) to match the float default value 7.0
+    cgpa        = st.slider("📊 CGPA",                  0.0, 10.0, 7.0, step=0.1, format="%.1f")
 with col2:
     internships = st.slider("🏢 Internships",           0, 3, 0)
-    projects    = st.slider("🛠 Projects",              1, 6, 2)
-    coding      = st.slider("💻 Coding Skills",         1, 10, 5)
-    comm        = st.slider("🗣 Communication Skills",  1, 10, 5)
-    aptitude    = st.slider("🧠 Aptitude Test Score",   35, 100, 60)
+    projects    = st.slider("🛠 Projects",              0, 6, 2)
+    coding      = st.slider("💻 Coding Skills",         0, 10, 5)
+    comm        = st.slider("🗣 Communication Skills",  0, 10, 5)
+    aptitude    = st.slider("🧠 Aptitude Test Score",   0, 100, 60)
 with col3:
-    soft        = st.slider("🌟 Soft Skills Rating",    1, 10, 5)
+    soft        = st.slider("🌟 Soft Skills Rating",    0, 10, 5)
     certs       = st.slider("📜 Certifications",        0, 3, 1)
     backlogs    = st.slider("⚠️ Backlogs",              0, 3, 0)
 
@@ -226,11 +224,17 @@ if predict_btn:
         columns=feature_cols
     )
 
-    pred           = model.predict(row)[0]
-    proba          = model.predict_proba(row)[0]
-    label          = target_enc.inverse_transform([pred])[0]
-    placed_pct     = round(proba[1] * 100, 1)
-    not_placed_pct = round(proba[0] * 100, 1)
+    pred  = model.predict(row)[0]
+    proba = model.predict_proba(row)[0]
+    label = target_enc.inverse_transform([pred])[0]
+
+    # FIX 2: Determine "Placed" index from model.classes_ instead of hardcoding proba[1]
+    classes        = list(model.classes_)
+    placed_idx     = classes.index(target_enc.transform(["Placed"])[0])
+    not_placed_idx = 1 - placed_idx
+
+    placed_pct     = round(proba[placed_idx] * 100, 1)
+    not_placed_pct = round(proba[not_placed_idx] * 100, 1)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -256,7 +260,8 @@ if predict_btn:
     m4.markdown(f'<div class="metric-tile"><p class="metric-value" style="color:#38bdf8">{projects}</p><p class="metric-label">Projects done</p></div>', unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
-    st.progress(int(placed_pct), text=f"Placement probability: {placed_pct}%")
+    # FIX 3: st.progress() expects a float 0.0–1.0, not an int 0–100
+    st.progress(placed_pct / 100, text=f"Placement probability: {placed_pct}%")
     st.markdown("<br>", unsafe_allow_html=True)
 
     # ── Charts ────────────────────────────────────────────
