@@ -6,6 +6,7 @@ import matplotlib.patches as mpatches
 import os
 
 
+
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Placement Predictor",
