@@ -15,6 +15,8 @@ except Exception as e:
     print("❌ Error loading model files.")
     print("Make sure you ran train_model.py first.")
     print(f"Details: {e}")
+
+    
     sys.exit()
 
 
