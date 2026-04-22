@@ -24,6 +24,8 @@ st.markdown("""
 html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
 .stApp { background: #0a0a0f; color: #e8e6f0; }
 
+
+
 .hero {
     background: linear-gradient(135deg, #0f0f1a 0%, #1a0a2e 50%, #0a1628 100%);
     border: 1px solid rgba(138,92,246,0.2);
