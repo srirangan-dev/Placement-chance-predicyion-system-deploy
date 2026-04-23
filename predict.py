@@ -27,6 +27,8 @@ print("=" * 50)
     
 print("  Placement Prediction System")
 print("=" * 50)
+
+
 print("Enter student details below:\n")
 
 
