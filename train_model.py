@@ -30,6 +30,8 @@ from itertools import combinations
 # ─── Load Data ─────────────────────────────────────────────
 base_path = os.path.dirname(os.path.abspath(__file__))
 train = pd.read_csv(os.path.join(base_path, "train.csv"))
+
+
 test  = pd.read_csv(os.path.join(base_path, "test.csv"))
 
 print(f"Train: {train.shape}  |  Test: {test.shape}")
