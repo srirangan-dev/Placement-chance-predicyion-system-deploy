@@ -6,13 +6,31 @@ import matplotlib.patches as mpatches
 import numpy as np
 import os
 
+<<<<<<< HEAD
 st.set_page_config(page_title="Placement Predictor", page_icon="🎓", layout="wide")
+=======
+
+
+# ── Page config ───────────────────────────────────────────────────────────────
+st.set_page_config(
+    page_title="Placement Predictor",
+    page_icon="🎓",
+    layout="wide" 
+)
+>>>>>>> 3af3047317a37b3af43901106de6bfdec4af4ae8
 
 st.markdown("""
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
 .stApp { background: #0a0a0f; color: #e8e6f0; }
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 3af3047317a37b3af43901106de6bfdec4af4ae8
 .hero {
     background: linear-gradient(135deg, #0f0f1a 0%, #1a0a2e 50%, #0a1628 100%);
     border: 1px solid rgba(138,92,246,0.2); border-radius: 20px;

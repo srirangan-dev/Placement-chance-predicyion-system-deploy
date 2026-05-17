@@ -3,22 +3,34 @@ import numpy as np
 import pandas as pd
 import sys
 
+
+
 # ─── Load Model & Files Safely ─────────────────────────────
 try:
     model        = joblib.load('best_model.pkl')
     encoders     = joblib.load('label_encoders.pkl')
     target_enc   = joblib.load('target_encoder.pkl')
     feature_cols = joblib.load('feature_cols.pkl')  
+
+
+    
 except Exception as e:
+
+    
     print("❌ Error loading model files.")
     print("Make sure you ran train_model.py first.")
     print(f"Details: {e}")
+
+    
     sys.exit()
 
 
 print("=" * 50)
+    
 print("  Placement Prediction System")
 print("=" * 50)
+
+
 print("Enter student details below:\n")
 
 

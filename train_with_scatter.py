@@ -6,14 +6,22 @@ import matplotlib
 matplotlib.use('Agg')
 
 import matplotlib.pyplot as plt
+
+
 import matplotlib.gridspec as gridspec
 import seaborn as sns
 import joblib
 import warnings
-warnings.filterwarnings('ignore')
 
+warnings.filterwarnings('ignore')
 from sklearn.preprocessing import LabelEncoder
+<<<<<<< HEAD
 from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score, confusion_matrix)
+=======
+
+from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score,
+                             confusion_matrix)
+>>>>>>> 3af3047317a37b3af43901106de6bfdec4af4ae8
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, AdaBoostClassifier
@@ -43,6 +51,7 @@ except ImportError:
 #  LOAD DATA
 # ══════════════════════════════════════════════════════════════
 base_path = os.path.dirname(os.path.abspath(__file__))
+
 train = pd.read_csv(os.path.join(base_path, "train.csv"))
 test  = pd.read_csv(os.path.join(base_path, "test.csv"))
 
@@ -744,3 +753,10 @@ print("   📄 scatter_report.png   — 12-panel scatter analysis")
 print("   📄 pairplot_report.png  — full feature pairplot matrix")
 
 
+<<<<<<< HEAD
+=======
+print("\n🎉 All reports generated!")
+print("   📄 ml_report.png       — original 5-panel model comparison")
+print("   📄 scatter_report.png  — 12-panel scatter analysis")
+print("   📄 pairplot_report.png — full feature pairplot matrix")
+>>>>>>> 3af3047317a37b3af43901106de6bfdec4af4ae8
