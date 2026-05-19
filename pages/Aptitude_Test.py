@@ -70,6 +70,7 @@ html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
 }
 .btn-submit > button { background: linear-gradient(135deg, #6366f1, #8b5cf6) !important; color: white !important; border: none !important; font-size: 1rem !important; padding: 14px 0 !important; }
 .btn-use    > button { background: linear-gradient(135deg, #065f46, #047857) !important; color: #34d399 !important; border: 1px solid rgba(52,211,153,0.35) !important; }
+.btn-home   > button { background: linear-gradient(135deg, #1e1b4b, #312e81) !important; color: #818cf8 !important; border: 1px solid rgba(129,140,248,0.35) !important; font-size: 1rem !important; padding: 14px 0 !important; }
 .stRadio label { color: #cbd5e1 !important; font-size: 0.9rem !important; }
 hr { border-color: rgba(255,255,255,0.06) !important; }
 </style>
@@ -233,13 +234,23 @@ if st.session_state.at_submitted and st.session_state.at_score is not None:
         </div>""", unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
-    col_use, col_retake = st.columns(2)
+
+    # ── Action buttons row ─────────────────────────────────────────────
+    col_home, col_use, col_retake = st.columns(3)
+
+    with col_home:
+        st.markdown('<div class="btn-home">', unsafe_allow_html=True)
+        if st.button("🏠  Back to Home", use_container_width=True):
+            st.switch_page("app.py")
+        st.markdown('</div>', unsafe_allow_html=True)
+
     with col_use:
         st.markdown('<div class="btn-use">', unsafe_allow_html=True)
-        if st.button(f"✅  Send Score ({score}/100) → Placement Predictor", use_container_width=True):
+        if st.button(f"✅  Send Score ({score}/100) → Predictor", use_container_width=True):
             st.session_state["aptitude_score"] = score
             st.success(f"✅ Score {score}/100 saved! Go to **🏠 app** in the sidebar — Aptitude Score auto-filled to {score}.")
         st.markdown('</div>', unsafe_allow_html=True)
+
     with col_retake:
         if st.button("🔄  Retake Test", use_container_width=True):
             st.session_state.at_answers   = {}
@@ -271,6 +282,13 @@ if st.session_state.at_submitted and st.session_state.at_score is not None:
           <div class="ans-explain">💡 {q['explanation']}</div>
         </div>
         """, unsafe_allow_html=True)
+
+    # ── Bottom Home button after review ───────────────────────────────
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown('<div class="btn-home">', unsafe_allow_html=True)
+    if st.button("🏠  Back to Home", key="home_bottom", use_container_width=True):
+        st.switch_page("app.py")
+    st.markdown('</div>', unsafe_allow_html=True)
 
     st.stop()
 

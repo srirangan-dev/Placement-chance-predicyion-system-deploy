@@ -15,13 +15,11 @@ import warnings
 
 warnings.filterwarnings('ignore')
 from sklearn.preprocessing import LabelEncoder
-<<<<<<< HEAD
-from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score, confusion_matrix)
-=======
 
-from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score,
-                             confusion_matrix)
->>>>>>> 3af3047317a37b3af43901106de6bfdec4af4ae8
+from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score, confusion_matrix)
+
+from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score,confusion_matrix)
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, AdaBoostClassifier

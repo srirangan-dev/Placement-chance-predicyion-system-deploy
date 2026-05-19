@@ -80,9 +80,10 @@ div[data-testid="stHorizontalBlock"] .nav-btn > button {
     border-radius: 10px !important;
     font-family: 'Syne', sans-serif !important;
     font-weight: 700 !important;
-    font-size: 0.88rem !important;
-    padding: 8px 18px !important;
+    font-size: 0.82rem !important;
+    padding: 8px 10px !important;
     transition: all 0.2s ease !important;
+    white-space: nowrap !important;
 }
 div[data-testid="stHorizontalBlock"] .nav-btn > button:hover {
     background: rgba(167,139,250,0.12) !important;
@@ -135,20 +136,22 @@ auto_comm     = st.session_state.get("comm_score",     None)
 
 # ── TOP NAVIGATION ─────────────────────────────────────────────────────────
 st.markdown('<p style="font-size:0.72rem;color:#475569;font-family:Syne,sans-serif;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">📋 Navigate to Assessments</p>', unsafe_allow_html=True)
-nav1, nav2, nav3, nav_spacer = st.columns([1, 1, 1, 5])
+
+# FIX: give Communication column more space (1.5 vs 1) so button text fits
+nav1, nav2, nav3, nav_spacer = st.columns([1, 1, 1.5, 4.5])
 with nav1:
     st.markdown('<div class="nav-btn">', unsafe_allow_html=True)
-    if st.button("💻 Coding →", width='stretch'):
+    if st.button("💻 Coding →", use_container_width=True):
         st.switch_page("pages/Coding_Assessment.py")
     st.markdown('</div>', unsafe_allow_html=True)
 with nav2:
     st.markdown('<div class="nav-btn">', unsafe_allow_html=True)
-    if st.button("🧠 Aptitude →", width='stretch'):
+    if st.button("🧠 Aptitude →", use_container_width=True):
         st.switch_page("pages/Aptitude_Test.py")
     st.markdown('</div>', unsafe_allow_html=True)
 with nav3:
     st.markdown('<div class="nav-btn">', unsafe_allow_html=True)
-    if st.button("🗣 Communication →", width='stretch'):
+    if st.button("🗣 Communication →", use_container_width=True):
         st.switch_page("pages/Communication_Test.py")
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -168,11 +171,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ── Profile Completeness Bar ───────────────────────────────────────────────
+# FIX: starts at 0%, each completed test adds ~33%, all 3 = 100%
 tests_done  = sum([auto_coding is not None, auto_aptitude is not None, auto_comm is not None])
-profile_pct = 40 + tests_done * 20
+profile_pct = [0, 34, 67, 100][tests_done]
+
 if   profile_pct == 100: bar_color, bar_msg = "#34d399", "Profile Complete 🎉"
-elif profile_pct >= 80:  bar_color, bar_msg = "#38bdf8", "Almost There!"
-elif profile_pct >= 60:  bar_color, bar_msg = "#a78bfa", "Good Progress"
+elif profile_pct >= 67:  bar_color, bar_msg = "#38bdf8", "Almost There!"
+elif profile_pct >= 34:  bar_color, bar_msg = "#a78bfa", "Good Progress"
 else:                    bar_color, bar_msg = "#f87171", "Complete Your Profile"
 
 pill_c = f'<span class="profile-test-pill" style="background:rgba(79,195,247,0.15);color:#4fc3f7;border:1px solid rgba(79,195,247,0.3);">{"✅" if auto_coding   is not None else "⬜"} Coding Test</span>'
@@ -203,12 +208,12 @@ if auto_comm     is not None:
 # ── Sidebar ────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("### 🧭 Assessment Pages")
-    st.info("Take tests to auto-fill scores and reach 100% profile completeness.")
-    if st.button("💻 Go to Coding Assessment", width='stretch'):
+    st.info("Take all 3 tests to reach 100% profile completeness and unlock prediction.")
+    if st.button("💻 Go to Coding Assessment", use_container_width=True):
         st.switch_page("pages/Coding_Assessment.py")
-    if st.button("🧠 Go to Aptitude Test", width='stretch'):
+    if st.button("🧠 Go to Aptitude Test", use_container_width=True):
         st.switch_page("pages/Aptitude_Test.py")
-    if st.button("🗣 Go to Communication Test", width='stretch'):
+    if st.button("🗣 Go to Communication Test", use_container_width=True):
         st.switch_page("pages/Communication_Test.py")
     st.markdown("---")
     if auto_coding   is not None: st.success(f"💻 Coding: **{auto_coding}/10**")
@@ -277,7 +282,8 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 # ── Predict — gated behind 100% profile ───────────────────────────────────
 if profile_pct < 100:
-    remaining  = (100 - profile_pct) // 20
+    # FIX: remaining is simply how many tests are left
+    remaining  = 3 - tests_done
     tests_left = []
     if auto_coding   is None: tests_left.append("💻 Coding Test")
     if auto_aptitude is None: tests_left.append("🧠 Aptitude Test")
@@ -306,22 +312,22 @@ if profile_pct < 100:
     jc1, jc2, jc3 = st.columns(3)
     with jc1:
         if auto_coding is None:
-            if st.button("💻 Take Coding Test", width='stretch'):
+            if st.button("💻 Take Coding Test", use_container_width=True):
                 st.switch_page("pages/Coding_Assessment.py")
     with jc2:
         if auto_aptitude is None:
-            if st.button("🧠 Take Aptitude Test", width='stretch'):
+            if st.button("🧠 Take Aptitude Test", use_container_width=True):
                 st.switch_page("pages/Aptitude_Test.py")
     with jc3:
         if auto_comm is None:
-            if st.button("🗣 Take Communication Test", width='stretch'):
+            if st.button("🗣 Take Communication Test", use_container_width=True):
                 st.switch_page("pages/Communication_Test.py")
 
-    st.button("🔒  Complete Profile to Predict", width='stretch',
+    st.button("🔒  Complete Profile to Predict", use_container_width=True,
               type="primary", disabled=True)
     st.stop()
 
-predict_btn = st.button("🔍  Predict My Placement", width='stretch', type="primary")
+predict_btn = st.button("🔍  Predict My Placement", use_container_width=True, type="primary")
 
 # ── Run prediction ─────────────────────────────────────────────────────────
 if predict_btn:
@@ -412,7 +418,7 @@ if predict_btn:
                 ax1.text(val * 100 + 0.2, bar.get_y() + bar.get_height()/2,
                          f'{val*100:.1f}%', va='center', color='#94a3b8', fontsize=7)
             plt.tight_layout()
-            st.pyplot(fig1, width='stretch')
+            st.pyplot(fig1, use_container_width=True)
             plt.close()
 
     with c2:
@@ -432,7 +438,7 @@ if predict_btn:
             loc='lower center', framealpha=0, labelcolor='#94a3b8', fontsize=8
         )
         plt.tight_layout()
-        st.pyplot(fig2, width='stretch')
+        st.pyplot(fig2, use_container_width=True)
         plt.close()
 
     with c3:
@@ -462,7 +468,7 @@ if predict_btn:
             dot_col = '#f87171' if val < 4 else '#fbbf24' if val < 7 else '#34d399'
             ax3.plot(angle, val, 'o', color=dot_col, markersize=6, zorder=5)
         plt.tight_layout()
-        st.pyplot(fig3, width='stretch')
+        st.pyplot(fig3, use_container_width=True)
         plt.close()
 
     st.markdown("<br>", unsafe_allow_html=True)
