@@ -137,7 +137,6 @@ auto_comm     = st.session_state.get("comm_score",     None)
 # ── TOP NAVIGATION ─────────────────────────────────────────────────────────
 st.markdown('<p style="font-size:0.72rem;color:#475569;font-family:Syne,sans-serif;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">📋 Navigate to Assessments</p>', unsafe_allow_html=True)
 
-# FIX: give Communication column more space (1.5 vs 1) so button text fits
 nav1, nav2, nav3, nav_spacer = st.columns([1, 1, 1.5, 4.5])
 with nav1:
     st.markdown('<div class="nav-btn">', unsafe_allow_html=True)
@@ -171,7 +170,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ── Profile Completeness Bar ───────────────────────────────────────────────
-# FIX: starts at 0%, each completed test adds ~33%, all 3 = 100%
 tests_done  = sum([auto_coding is not None, auto_aptitude is not None, auto_comm is not None])
 profile_pct = [0, 34, 67, 100][tests_done]
 
@@ -259,30 +257,29 @@ st.markdown('<p class="section-label">Step 01</p>'
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    age         = st.slider("🎂 Age",                        5, 55, 21)
+    age         = st.slider("🎂 Age",                        5, 55, 0)
     gender      = st.selectbox("👤 Gender",                  ["Male", "Female"])
     degree      = st.selectbox("🎓 Degree",                  ["B.Tech", "BCA", "MCA", "B.Sc"])
     branch      = st.selectbox("🏫 Branch",                  ["CSE", "ECE", "ME", "Civil", "IT"])
-    cgpa        = st.slider("📊 CGPA",                       0.0, 10.0, 7.0, step=0.1, format="%.1f")
+    cgpa        = st.slider("📊 CGPA",                       0.0, 10.0, 0.0, step=0.1, format="%.1f")
 with col2:
     internships = st.slider("🏢 Internships",                0, 3, 0)
-    projects    = st.slider("🛠 Projects",                   0, 6, 2)
-    coding_def  = int(auto_coding)   if auto_coding   is not None else 5
+    projects    = st.slider("🛠 Projects",                   0, 6, 0)
+    coding_def  = int(auto_coding)   if auto_coding   is not None else 0
     coding      = st.slider("💻 Coding Skills (0–10)",       0, 10, coding_def)
-    comm_def    = int(auto_comm)     if auto_comm     is not None else 5
+    comm_def    = int(auto_comm)     if auto_comm     is not None else 0
     comm        = st.slider("🗣 Communication Skills (0–10)", 0, 10, comm_def)
-    apt_def     = int(auto_aptitude) if auto_aptitude is not None else 60
+    apt_def     = int(auto_aptitude) if auto_aptitude is not None else 0
     aptitude    = st.slider("🧠 Aptitude Test Score (0–100)", 0, 100, apt_def)
 with col3:
-    soft        = st.slider("🌟 Soft Skills Rating",         0, 10, 5)
-    certs       = st.slider("📜 Certifications",             0, 3, 1)
+    soft        = st.slider("🌟 Soft Skills Rating",         0, 10, 0)
+    certs       = st.slider("📜 Certifications",             0, 3, 0)
     backlogs    = st.slider("⚠️ Backlogs",                  0, 3, 0)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
 # ── Predict — gated behind 100% profile ───────────────────────────────────
 if profile_pct < 100:
-    # FIX: remaining is simply how many tests are left
     remaining  = 3 - tests_done
     tests_left = []
     if auto_coding   is None: tests_left.append("💻 Coding Test")
