@@ -8,28 +8,11 @@ import os
 
 st.set_page_config(page_title="Placement Predictor", page_icon="🎓", layout="wide")
 
-
-
-# ── Page config ───────────────────────────────────────────────────────────────
-st.set_page_config(
-    page_title="Placement Predictor",
-    page_icon="🎓",
-    layout="wide" 
-)
-
-
 st.markdown("""
 <style>
-
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
 .stApp { background: #0a0a0f; color: #e8e6f0; }
-<<<<<<< HEAD
-=======
-
-
-
-
 .hero {
     background: linear-gradient(135deg, #0f0f1a 0%, #1a0a2e 50%, #0a1628 100%);
     border: 1px solid rgba(138,92,246,0.2); border-radius: 20px;
@@ -82,6 +65,29 @@ html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
 .road-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: #f1f0f8; }
 .road-desc  { font-size: 0.78rem; color: #64748b; margin-top: 3px; line-height: 1.5; }
 .road-boost { margin-left: auto; border-radius: 10px; padding: 3px 12px; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; white-space: nowrap; }
+.nav-bar {
+    display: flex; justify-content: flex-end; align-items: center;
+    gap: 10px; margin-bottom: 24px;
+}
+.nav-label {
+    font-size: 0.78rem; color: #475569; margin-right: 8px;
+    font-family: 'Syne', sans-serif; letter-spacing: 0.06em; text-transform: uppercase;
+}
+div[data-testid="stHorizontalBlock"] .nav-btn > button {
+    background: #111118 !important;
+    color: #a78bfa !important;
+    border: 1px solid rgba(167,139,250,0.35) !important;
+    border-radius: 10px !important;
+    font-family: 'Syne', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 0.88rem !important;
+    padding: 8px 18px !important;
+    transition: all 0.2s ease !important;
+}
+div[data-testid="stHorizontalBlock"] .nav-btn > button:hover {
+    background: rgba(167,139,250,0.12) !important;
+    border-color: rgba(167,139,250,0.7) !important;
+}
 .stButton > button {
     background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
     color: white !important; border: none !important; border-radius: 12px !important;
@@ -92,6 +98,21 @@ html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
 hr { border-color: rgba(255,255,255,0.06) !important; }
 #MainMenu, footer, header { visibility: hidden; }
 .block-container { padding-top: 2rem; padding-bottom: 2rem; max-width: 1100px; }
+[data-testid="stExpander"] {
+    background: #111118 !important;
+    border: 1px solid rgba(255,255,255,0.07) !important;
+    border-radius: 16px !important;
+    margin-bottom: 24px !important;
+}
+[data-testid="stExpander"] summary {
+    font-family: 'Syne', sans-serif !important;
+    font-weight: 700 !important;
+    color: #f1f0f8 !important;
+    padding: 18px 24px !important;
+}
+[data-testid="stExpander"] > div > div {
+    padding: 0 24px 20px 24px !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -110,13 +131,34 @@ model, encoders, target_enc, feature_cols, fi = load_artifacts()
 # ── Auto-fill scores from assessment pages ─────────────────────────────────
 auto_coding   = st.session_state.get("coding_score",   None)
 auto_aptitude = st.session_state.get("aptitude_score", None)
-auto_comm     = st.session_state.get("comm_score",     None)  # ← from Communication Test page
+auto_comm     = st.session_state.get("comm_score",     None)
+
+# ── TOP NAVIGATION ─────────────────────────────────────────────────────────
+st.markdown('<p style="font-size:0.72rem;color:#475569;font-family:Syne,sans-serif;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">📋 Navigate to Assessments</p>', unsafe_allow_html=True)
+nav1, nav2, nav3, nav_spacer = st.columns([1, 1, 1, 5])
+with nav1:
+    st.markdown('<div class="nav-btn">', unsafe_allow_html=True)
+    if st.button("💻 Coding →", width='stretch'):
+        st.switch_page("pages/Coding_Assessment.py")
+    st.markdown('</div>', unsafe_allow_html=True)
+with nav2:
+    st.markdown('<div class="nav-btn">', unsafe_allow_html=True)
+    if st.button("🧠 Aptitude →", width='stretch'):
+        st.switch_page("pages/Aptitude_Test.py")
+    st.markdown('</div>', unsafe_allow_html=True)
+with nav3:
+    st.markdown('<div class="nav-btn">', unsafe_allow_html=True)
+    if st.button("🗣 Communication →", width='stretch'):
+        st.switch_page("pages/Communication_Test.py")
+    st.markdown('</div>', unsafe_allow_html=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
 
 # ── Hero ───────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="hero">
   <p class="hero-title">🎓 Placement Predictor</p>
-  <p class="hero-sub">Fill your profile below — or take the Coding, Aptitude & Communication tests from the sidebar to auto-fill your scores.</p>
+  <p class="hero-sub">Fill your profile below — or take the Coding, Aptitude &amp; Communication tests from the sidebar to auto-fill your scores.</p>
   <div class="hero-badges">
     <span class="badge purple">Random Forest Model</span>
     <span class="badge blue">50,000 Student Records</span>
@@ -125,12 +167,9 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ══════════════════════════════════════════════════════════════════════
-# 🆕  PROFILE COMPLETENESS BAR
-# ══════════════════════════════════════════════════════════════════════
+# ── Profile Completeness Bar ───────────────────────────────────────────────
 tests_done  = sum([auto_coding is not None, auto_aptitude is not None, auto_comm is not None])
-profile_pct = 40 + tests_done * 20   # 40 base + 20 per test completed
-
+profile_pct = 40 + tests_done * 20
 if   profile_pct == 100: bar_color, bar_msg = "#34d399", "Profile Complete 🎉"
 elif profile_pct >= 80:  bar_color, bar_msg = "#38bdf8", "Almost There!"
 elif profile_pct >= 60:  bar_color, bar_msg = "#a78bfa", "Good Progress"
@@ -164,10 +203,13 @@ if auto_comm     is not None:
 # ── Sidebar ────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("### 🧭 Assessment Pages")
-    st.info("👈 Take tests to auto-fill scores and reach 100% profile completeness.")
-    st.markdown("- 💻 **Coding Assessment** → fills Coding Skills")
-    st.markdown("- 🧠 **Aptitude Test** → fills Aptitude Score")
-    st.markdown("- 🗣 **Communication Test** → fills Communication Skills")
+    st.info("Take tests to auto-fill scores and reach 100% profile completeness.")
+    if st.button("💻 Go to Coding Assessment", width='stretch'):
+        st.switch_page("pages/Coding_Assessment.py")
+    if st.button("🧠 Go to Aptitude Test", width='stretch'):
+        st.switch_page("pages/Aptitude_Test.py")
+    if st.button("🗣 Go to Communication Test", width='stretch'):
+        st.switch_page("pages/Communication_Test.py")
     st.markdown("---")
     if auto_coding   is not None: st.success(f"💻 Coding: **{auto_coding}/10**")
     if auto_aptitude is not None: st.success(f"🧠 Aptitude: **{auto_aptitude}/100**")
@@ -177,36 +219,32 @@ with st.sidebar:
 
 # ── Feature Importance ─────────────────────────────────────────────────────
 if fi is not None:
-    st.markdown('<div class="section-card">', unsafe_allow_html=True)
-    st.markdown('<p class="section-label">🌟 Why These Fields Matter</p>'
-                '<p class="section-title">Key Factors for Placement — From Trained Random Forest</p>',
-                unsafe_allow_html=True)
-    fi_sorted = fi.sort_values(ascending=False)
-    max_val   = fi_sorted.max()
-    def fi_color(val):
-        if val == max_val:                      return '#f87171'
-        elif val >= fi_sorted.quantile(0.75):   return '#4fc3f7'
-        elif val >= fi_sorted.quantile(0.5):    return '#a78bfa'
-        else:                                   return '#6366f1'
-    rows_html = ""
-    for feat, val in fi_sorted.items():
-        bar_w = int((val / max_val) * 100)
-        color = fi_color(val)
-        rows_html += f"""
-        <div class="fi-row">
-          <div class="fi-label">{feat}</div>
-          <div class="fi-bar-wrap"><div class="fi-bar" style="width:{bar_w}%;background:{color};"></div></div>
-          <div class="fi-pct">{val*100:.2f}%</div>
-        </div>"""
-    st.markdown(rows_html, unsafe_allow_html=True)
-    st.markdown("""
-    <div style="display:flex;gap:18px;margin-top:14px;flex-wrap:wrap;font-size:0.78rem;">
-      <span style="color:#f87171;">● Most Important</span>
-      <span style="color:#4fc3f7;">● High Importance</span>
-      <span style="color:#a78bfa;">● Moderate</span>
-      <span style="color:#6366f1;">● Lower</span>
-    </div>""", unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    with st.expander("🌟 Key Factors for Placement — From Trained Random Forest", expanded=True):
+        fi_sorted = fi.sort_values(ascending=False)
+        max_val   = fi_sorted.max()
+        def fi_color(val):
+            if val == max_val:                      return '#f87171'
+            elif val >= fi_sorted.quantile(0.75):   return '#4fc3f7'
+            elif val >= fi_sorted.quantile(0.5):    return '#a78bfa'
+            else:                                   return '#6366f1'
+        rows_html = ""
+        for feat, val in fi_sorted.items():
+            bar_w = int((val / max_val) * 100)
+            color = fi_color(val)
+            rows_html += f"""
+            <div class="fi-row">
+              <div class="fi-label">{feat}</div>
+              <div class="fi-bar-wrap"><div class="fi-bar" style="width:{bar_w}%;background:{color};"></div></div>
+              <div class="fi-pct">{val*100:.2f}%</div>
+            </div>"""
+        st.markdown(rows_html, unsafe_allow_html=True)
+        st.markdown("""
+        <div style="display:flex;gap:18px;margin-top:14px;flex-wrap:wrap;font-size:0.78rem;">
+          <span style="color:#f87171;">● Most Important</span>
+          <span style="color:#4fc3f7;">● High Importance</span>
+          <span style="color:#a78bfa;">● Moderate</span>
+          <span style="color:#6366f1;">● Lower</span>
+        </div>""", unsafe_allow_html=True)
 
 # ── Input Form ─────────────────────────────────────────────────────────────
 st.markdown('<div class="section-card">', unsafe_allow_html=True)
@@ -237,9 +275,55 @@ with col3:
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# ── Predict ────────────────────────────────────────────────────────────────
-predict_btn = st.button("🔍  Predict My Placement", use_container_width=True, type="primary")
+# ── Predict — gated behind 100% profile ───────────────────────────────────
+if profile_pct < 100:
+    remaining  = (100 - profile_pct) // 20
+    tests_left = []
+    if auto_coding   is None: tests_left.append("💻 Coding Test")
+    if auto_aptitude is None: tests_left.append("🧠 Aptitude Test")
+    if auto_comm     is None: tests_left.append("🗣 Communication Test")
 
+    st.markdown(f"""
+    <div style="background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.35);
+         border-radius:14px;padding:20px 24px;margin-bottom:16px;">
+      <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;color:#f87171;margin:0 0 6px 0;">
+        🔒 Complete your profile to unlock placement prediction
+      </p>
+      <p style="font-size:0.87rem;color:#94a3b8;margin:0 0 12px 0;">
+        You are at <strong style="color:#f87171;">{profile_pct}%</strong>.
+        Take the remaining {remaining} test{"s" if remaining > 1 else ""} from the sidebar or use the buttons above.
+      </p>
+      <div>{"".join(
+          f'<span style="display:inline-block;background:rgba(248,113,113,0.12);color:#f87171;'
+          f'border:1px solid rgba(248,113,113,0.3);border-radius:10px;padding:3px 14px;'
+          f'font-size:0.78rem;font-weight:600;margin:3px 6px 3px 0;">{t}</span>'
+          for t in tests_left
+      )}</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("**Quick Jump →**")
+    jc1, jc2, jc3 = st.columns(3)
+    with jc1:
+        if auto_coding is None:
+            if st.button("💻 Take Coding Test", width='stretch'):
+                st.switch_page("pages/Coding_Assessment.py")
+    with jc2:
+        if auto_aptitude is None:
+            if st.button("🧠 Take Aptitude Test", width='stretch'):
+                st.switch_page("pages/Aptitude_Test.py")
+    with jc3:
+        if auto_comm is None:
+            if st.button("🗣 Take Communication Test", width='stretch'):
+                st.switch_page("pages/Communication_Test.py")
+
+    st.button("🔒  Complete Profile to Predict", width='stretch',
+              type="primary", disabled=True)
+    st.stop()
+
+predict_btn = st.button("🔍  Predict My Placement", width='stretch', type="primary")
+
+# ── Run prediction ─────────────────────────────────────────────────────────
 if predict_btn:
     if comm < 5:
         st.markdown("""
@@ -273,7 +357,6 @@ if predict_btn:
           soft, certs, backlogs]],
         columns=feature_cols
     )
-
     pred  = model.predict(row)[0]
     proba = model.predict_proba(row)[0]
     label = target_enc.inverse_transform([pred])[0]
@@ -309,11 +392,8 @@ if predict_btn:
     st.progress(placed_pct / 100, text=f"Placement probability: {placed_pct}%")
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # ══════════════════════════════════════════════════════════════════════
-    # CHARTS: Feature Importance | Pie | 🆕 Skill Radar
-    # ══════════════════════════════════════════════════════════════════════
+    # ── Charts ─────────────────────────────────────────────────────────
     c1, c2, c3 = st.columns(3)
-
     with c1:
         st.markdown('<p class="section-label">🌟 Feature Importance</p>', unsafe_allow_html=True)
         if fi is not None:
@@ -331,7 +411,9 @@ if predict_btn:
             for bar, val in zip(bars, fi_plot.values):
                 ax1.text(val * 100 + 0.2, bar.get_y() + bar.get_height()/2,
                          f'{val*100:.1f}%', va='center', color='#94a3b8', fontsize=7)
-            plt.tight_layout(); st.pyplot(fig1, use_container_width=True); plt.close()
+            plt.tight_layout()
+            st.pyplot(fig1, width='stretch')
+            plt.close()
 
     with c2:
         st.markdown('<p class="section-label">Placement Probability</p>', unsafe_allow_html=True)
@@ -349,29 +431,22 @@ if predict_btn:
                      mpatches.Patch(color='#f87171', label=f'Not Placed ({not_placed_pct}%)')],
             loc='lower center', framealpha=0, labelcolor='#94a3b8', fontsize=8
         )
-        plt.tight_layout(); st.pyplot(fig2, use_container_width=True); plt.close()
+        plt.tight_layout()
+        st.pyplot(fig2, width='stretch')
+        plt.close()
 
-    # ══════════════════════════════════════════════════════════════════════
-    # 🆕  SKILL RADAR CHART
-    # ══════════════════════════════════════════════════════════════════════
     with c3:
         st.markdown('<p class="section-label">🕸 Skill Radar</p>', unsafe_allow_html=True)
-
         radar_labels = ['CGPA', 'Coding', 'Comm.', 'Aptitude', 'Soft Skills', 'Projects']
         radar_values = [
-            cgpa,
-            coding,
-            comm,
-            round(aptitude / 10, 1),
-            soft,
+            cgpa, coding, comm,
+            round(aptitude / 10, 1), soft,
             round(min(projects / 6 * 10, 10), 1),
         ]
-
         N      = len(radar_labels)
         angles = np.linspace(0, 2 * np.pi, N, endpoint=False).tolist()
         vals   = radar_values + [radar_values[0]]
         angs   = angles + angles[:1]
-
         fig3, ax3 = plt.subplots(figsize=(4.5, 4), subplot_kw=dict(polar=True))
         fig3.patch.set_facecolor('#111118'); ax3.set_facecolor('#111118')
         ax3.set_ylim(0, 10)
@@ -386,19 +461,16 @@ if predict_btn:
         for angle, val in zip(angles, radar_values):
             dot_col = '#f87171' if val < 4 else '#fbbf24' if val < 7 else '#34d399'
             ax3.plot(angle, val, 'o', color=dot_col, markersize=6, zorder=5)
-        plt.tight_layout(); st.pyplot(fig3, use_container_width=True); plt.close()
+        plt.tight_layout()
+        st.pyplot(fig3, width='stretch')
+        plt.close()
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # ══════════════════════════════════════════════════════════════════════
-    # 🆕  COMPANY MATCHER  +  🆕  IMPROVEMENT ROADMAP
-    # ══════════════════════════════════════════════════════════════════════
+    # ── Company Matcher + Improvement Roadmap ──────────────────────────
     comp_col, road_col = st.columns(2)
-
-    # ── Company Matcher ────────────────────────────────────────────────────
     with comp_col:
         st.markdown('<p class="section-label">🏢 Company Matcher</p>', unsafe_allow_html=True)
-
         companies = [
             {"name": "Product Companies",  "desc": "Google, Microsoft, Amazon, Flipkart",
              "color": "#f87171",
@@ -421,7 +493,6 @@ if predict_btn:
              "eligible": cgpa >= 6.5 and aptitude >= 60 and comm >= 6,
              "req": "CGPA ≥ 6.5 · Aptitude ≥ 60 · Comm ≥ 6"},
         ]
-
         any_eligible = False
         for c in companies:
             s_bg   = "rgba(52,211,153,0.12)"  if c["eligible"] else "rgba(248,113,113,0.08)"
@@ -440,69 +511,56 @@ if predict_btn:
               <div class="company-badge" style="background:{s_bg};color:{s_col};">{s_text}</div>
             </div>
             """, unsafe_allow_html=True)
-
         if not any_eligible:
             st.markdown('<div class="tip-item" style="border-color:#f87171;">⚠️ No tier matched yet — focus on CGPA, communication, and coding first.</div>', unsafe_allow_html=True)
 
-    # ── Smart Improvement Roadmap ──────────────────────────────────────────
     with road_col:
         st.markdown('<p class="section-label">🗺 Improvement Roadmap</p>', unsafe_allow_html=True)
-
         roadmap = []
         if backlogs >= 1:
             roadmap.append({"icon":"🚨","priority":"critical","title":"Clear your backlogs",
-                "desc":"Most companies auto-reject students with active backlogs. This is the single most impactful action you can take right now.",
-                "boost":"+15%"})
+                "desc":"Most companies auto-reject students with active backlogs.", "boost":"+15%"})
         if cgpa < 6.5:
             roadmap.append({"icon":"📚","priority":"critical","title":"Improve CGPA above 6.5",
-                "desc":"CGPA gates you out of most drives. Attend all classes, complete assignments, and prepare for exams early.",
-                "boost":"+12%"})
+                "desc":"CGPA gates you out of most drives.", "boost":"+12%"})
         if comm < 6:
             roadmap.append({"icon":"🗣","priority":"critical","title":"Strengthen communication skills",
-                "desc":"Communication carries 26% model weight — the highest. Take the Communication Test, join GD clubs, practice email writing.",
-                "boost":"+10%"})
+                "desc":"Communication carries the highest model weight.", "boost":"+10%"})
         if coding < 6:
             roadmap.append({"icon":"💻","priority":"important","title":"Level up coding skills",
-                "desc":"Solve 50+ LeetCode Easy/Medium problems. Focus on arrays, strings, and sorting. Take the Coding Assessment to benchmark.",
-                "boost":"+8%"})
+                "desc":"Solve 50+ LeetCode Easy/Medium problems.", "boost":"+8%"})
         if internships == 0:
             roadmap.append({"icon":"🏢","priority":"important","title":"Get at least one internship",
-                "desc":"Internship experience doubles your shortlisting rate. Apply on Internshala, LinkedIn, and company portals.",
-                "boost":"+7%"})
+                "desc":"Apply on Internshala, LinkedIn, and company portals.", "boost":"+7%"})
         if aptitude < 60:
             roadmap.append({"icon":"🧠","priority":"important","title":"Practice aptitude daily",
-                "desc":"Spend 20 min/day on IndiaBix or PrepInsta. Focus on speed math, logical reasoning, and data interpretation.",
-                "boost":"+6%"})
+                "desc":"Spend 20 min/day on IndiaBix or PrepInsta.", "boost":"+6%"})
         if projects < 2:
             roadmap.append({"icon":"🛠","priority":"good","title":"Build 2–3 strong projects",
-                "desc":"Host on GitHub with a good README. An ML project, web app, or data analysis project will stand out in interviews.",
-                "boost":"+5%"})
+                "desc":"Host on GitHub with a good README.", "boost":"+5%"})
         if certs == 0:
             roadmap.append({"icon":"📜","priority":"good","title":"Earn 1–2 certifications",
-                "desc":"Free options: Google (Coursera), NPTEL, AWS Skill Builder. Certifications signal self-motivation to recruiters.",
-                "boost":"+4%"})
+                "desc":"Free options: Google (Coursera), NPTEL, AWS.", "boost":"+4%"})
         if soft < 6:
             roadmap.append({"icon":"🌟","priority":"good","title":"Work on soft skills",
-                "desc":"Participate in hackathons, college events, and team projects. Leadership and teamwork shine in HR interviews.",
-                "boost":"+3%"})
+                "desc":"Participate in hackathons and team projects.", "boost":"+3%"})
 
         priority_styles = {
             "critical":  ("#f87171", "rgba(248,113,113,0.12)"),
             "important": ("#fbbf24", "rgba(251,191,36,0.10)"),
             "good":      ("#34d399", "rgba(52,211,153,0.10)"),
         }
-
         if not roadmap:
             st.markdown("""
             <div class="company-card" style="border:1px solid rgba(52,211,153,0.3);background:rgba(52,211,153,0.06);">
               <div style="font-size:1.4rem;">🎯</div>
               <div>
                 <div class="company-name" style="color:#34d399;">Your profile looks strong!</div>
-                <div class="company-desc">Focus on interview prep, mock GDs, and applying early during placement season.</div>
+                <div class="company-desc">Focus on interview prep, mock GDs, and applying early.</div>
               </div>
             </div>""", unsafe_allow_html=True)
         else:
-            for item in roadmap[:4]:   # show top 4 by impact
+            for item in roadmap[:4]:
                 pcol, pbg = priority_styles[item["priority"]]
                 st.markdown(f"""
                 <div class="road-item" style="border-left:3px solid {pcol};">
@@ -514,20 +572,18 @@ if predict_btn:
                   <div class="road-boost" style="background:{pbg};color:{pcol};">{item['boost']}</div>
                 </div>
                 """, unsafe_allow_html=True)
-            if len(roadmap) > 4:
-                extra_boost = sum(int(r["boost"].replace("+","").replace("%","")) for r in roadmap[4:])
-                st.markdown(f'<div style="font-size:0.78rem;color:#475569;margin-top:6px;text-align:center;">+{len(roadmap)-4} more actions · up to +{extra_boost}% additional boost</div>', unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # ── Quick tips ─────────────────────────────────────────────────────────
+    # ── Quick tips ─────────────────────────────────────────────────────
     tips = []
     if cgpa < 6.5:       tips.append("📚 Improve your CGPA — aim for at least 7.0")
     if coding < 6:       tips.append("💻 Strengthen coding skills — practice DSA on LeetCode / HackerRank")
-    if comm < 7:         tips.append("🗣 Work on communication — take the Communication Skills Test from the sidebar")
+    if comm < 7:         tips.append("🗣 Work on communication — take the Communication Skills Test")
     if internships == 0: tips.append("🏢 Complete at least one internship before placement season")
     if certs == 0:       tips.append("📜 Earn certifications on Coursera, NPTEL, or Google")
     if projects < 2:     tips.append("🛠 Build 2–3 strong projects and host them on GitHub")
+
     if tips:
         st.markdown('<p class="section-label">💡 Quick Suggestions</p>', unsafe_allow_html=True)
         for tip in tips:
@@ -536,6 +592,6 @@ if predict_btn:
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("""
 <div style="text-align:center;color:#334155;font-size:0.78rem;padding:16px 0;">
-  ML Mini Project · Placement Prediction System · Built with Streamlit & scikit-learn
+  ML Mini Project · Placement Prediction System · Built with Streamlit &amp; scikit-learn
 </div>
 """, unsafe_allow_html=True)
