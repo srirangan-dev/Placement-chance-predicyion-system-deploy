@@ -6,8 +6,6 @@ import matplotlib
 matplotlib.use('Agg')
 
 import matplotlib.pyplot as plt
-
-
 import matplotlib.gridspec as gridspec
 import seaborn as sns
 import joblib
@@ -19,6 +17,8 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score, confusion_matrix)
 
 from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score,confusion_matrix)
+
+
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -82,6 +82,8 @@ train['Aptitude_Test_Score'] = train['Aptitude_Test_Score'].clip(0, 100)
 print("\n✅ Realistic noise added to training data")
 print("Placement distribution (after noise):")
 print(train['Placement_Status'].value_counts())
+
+
 
 # ── ADD NOISE TO TEST DATA TOO (same rate, different seed) ──
 # Without this, test accuracy > train accuracy (impossible in real world)
