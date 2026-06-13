@@ -1,13 +1,9 @@
 import os
 import pandas as pd
 import numpy as np
-
 import matplotlib
-
 matplotlib.use('Agg')
-
 import matplotlib.pyplot as plt
-
 import matplotlib.gridspec as gridspec
 import seaborn as sns
 import joblib
@@ -30,6 +26,8 @@ from itertools import combinations
 # ─── Load Data ─────────────────────────────────────────────
 base_path = os.path.dirname(os.path.abspath(__file__))
 train = pd.read_csv(os.path.join(base_path, "train.csv"))
+
+
 
 
 test  = pd.read_csv(os.path.join(base_path, "test.csv"))
@@ -55,11 +53,18 @@ for col in cat_cols:
     test[col]  = le.transform(test[col])
     encoders[col] = le
 
+
+
+
 target_enc = LabelEncoder()
 train['Placement_Status'] = target_enc.fit_transform(train['Placement_Status'])
 
 print("\nLabel encoding:")
 print(dict(zip(target_enc.classes_, target_enc.transform(target_enc.classes_))))
+
+
+
+
 
 
 # ─── Feature & Target ─────────────────────────────────────
@@ -79,7 +84,10 @@ else:
 
 # ─── Leakage Check ─────────────────────────────────────────
 print("\n🔍 Correlation with Target:")
-print(train.corr()['Placement_Status'].sort_values(ascending=False))
+print(
+  train.corr()['Placement_Status'].sort_values(ascending=False))
+
+
 
 
 # ─── Models ───────────────────────────────────────────────
