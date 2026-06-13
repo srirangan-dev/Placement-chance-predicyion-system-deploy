@@ -159,6 +159,9 @@ QUESTIONS = [
      "explanation":"Travel = 15% × 40,000 = ₹6,000."},
 ]
 
+
+
+
 TOTAL_Q     = len(QUESTIONS)
 TOTAL_MARKS = sum(q["marks"] for q in QUESTIONS)
 
