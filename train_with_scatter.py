@@ -4,12 +4,12 @@ import numpy as np
 
 import matplotlib
 matplotlib.use('Agg')
-
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import seaborn as sns
 import joblib
 import warnings
+
 
 warnings.filterwarnings('ignore')
 from sklearn.preprocessing import LabelEncoder
@@ -17,9 +17,6 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score, confusion_matrix)
 
 from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score,confusion_matrix)
-
-
-
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, AdaBoostClassifier
@@ -36,6 +33,8 @@ try:
 except ImportError:
     print("⚠️  imbalanced-learn not found. Run: pip install imbalanced-learn")
     SMOTE_AVAILABLE = False
+
+
 
 try:
     import shap
