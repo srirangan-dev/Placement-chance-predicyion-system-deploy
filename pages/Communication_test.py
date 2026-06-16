@@ -18,6 +18,8 @@ html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     margin: 0 0 6px 0;
 }
+
+
 .hero-sub { font-size: 0.95rem; color: #94a3b8; margin: 0; }
 .q-card {
     background: #111118; border: 1px solid rgba(255,255,255,0.07);
@@ -30,6 +32,8 @@ html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
     background: linear-gradient(135deg, #0a1f14, #052e1c);
     border: 1px solid #16a34a; border-radius: 18px; padding: 32px 36px; margin-top: 20px;
 }
+
+
 .result-title { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800;
                 color: #4ade80; margin: 0 0 4px 0; }
 .result-grade { font-size: 1rem; color: #86efac; margin: 0 0 18px 0; }
