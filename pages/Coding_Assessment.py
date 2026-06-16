@@ -2,6 +2,8 @@ import streamlit as st
 
 st.set_page_config(page_title="Coding Assessment", page_icon="💻", layout="wide")
 
+
+
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -25,6 +27,8 @@ html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     margin: 0 0 8px 0; line-height: 1.15;
 }
+
+
 .hero-sub { font-size: 0.95rem; color: #94a3b8; font-weight: 300; margin: 0 0 18px 0; }
 .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; }
 .badge { border-radius: 20px; padding: 4px 14px; font-size: 0.75rem; font-weight: 500; }
