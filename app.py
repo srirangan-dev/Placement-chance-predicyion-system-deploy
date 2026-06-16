@@ -9,7 +9,6 @@ import os
 st.set_page_config(page_title="Placement Predictor", page_icon="🎓", layout="wide")
 #library streamlit
 
-
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
@@ -24,6 +23,8 @@ html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
     content: ''; position: absolute; top: -60px; right: -60px; width: 260px; height: 260px;
     background: radial-gradient(circle, rgba(138,92,246,0.15) 0%, transparent 70%); border-radius: 50%;
 }
+
+
 .hero-title {
     font-family: 'Syne', sans-serif; font-size: 2.6rem; font-weight: 800;
     background: linear-gradient(90deg, #a78bfa, #38bdf8, #34d399);
