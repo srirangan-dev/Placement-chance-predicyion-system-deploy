@@ -7,6 +7,7 @@ import numpy as np
 import os
 
 
+
 st.set_page_config(page_title="Placement Predictor", page_icon="🎓", layout="wide")
 #library streamlit
 
