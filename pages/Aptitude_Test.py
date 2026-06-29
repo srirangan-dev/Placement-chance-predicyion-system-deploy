@@ -2,8 +2,6 @@ import streamlit as st
 
 st.set_page_config(page_title="Aptitude Test", page_icon="🧠", layout="wide")
 
-
-
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
@@ -12,6 +10,8 @@ html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
 #MainMenu, footer, header { visibility: hidden; }
 .block-container { padding-top: 1.5rem; padding-bottom: 2rem; max-width: 1100px; }
 .hero {
+
+
     background: linear-gradient(135deg, #0f0a1a 0%, #1a0e30 60%, #0a1020 100%);
     border: 1px solid rgba(167,139,250,0.25); border-radius: 20px;
     padding: 36px 44px; margin-bottom: 28px; position: relative; overflow: hidden;
