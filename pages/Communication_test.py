@@ -2,6 +2,7 @@ import streamlit as st
 
 st.set_page_config(page_title="Communication Test", page_icon="🗣", layout="wide")
 
+
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
@@ -12,6 +13,7 @@ html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
     border: 1px solid rgba(52,211,153,0.2); border-radius: 20px;
     padding: 36px 44px; margin-bottom: 28px;
 }
+
 .hero-title {
     font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800;
     background: linear-gradient(90deg, #34d399, #38bdf8);
