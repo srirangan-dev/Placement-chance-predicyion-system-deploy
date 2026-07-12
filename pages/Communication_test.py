@@ -7,8 +7,6 @@ st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
 .stApp { background: #0a0a0f; color: #e8e6f0; }
-
-
 .hero {
     background: linear-gradient(135deg, #0f0f1a 0%, #0a1a2e 100%);
     border: 1px solid rgba(52,211,153,0.2); border-radius: 20px;
