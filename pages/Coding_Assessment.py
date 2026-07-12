@@ -5,6 +5,8 @@ st.set_page_config(page_title="Coding Assessment", page_icon="💻", layout="wid
 
 st.markdown("""
 <style>
+
+
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap');
 html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
 .stApp { background: #0a0a0f; color: #e8e6f0; }
