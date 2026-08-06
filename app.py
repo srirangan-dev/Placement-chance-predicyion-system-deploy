@@ -8,7 +8,6 @@ import os
 
 st.set_page_config(page_title="Placement Predictor", page_icon="🎓", layout="wide")
 #library streamlit
-
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
