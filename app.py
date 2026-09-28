@@ -6,7 +6,6 @@ import matplotlib.patches as mpatches
 import numpy as np
 import os
 
-
 st.set_page_config(page_title="Placement Predictor", page_icon="🎓", layout="wide")
 st.markdown("""
 <style>
@@ -22,6 +21,7 @@ html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
     content: ''; position: absolute; top: -60px; right: -60px; width: 260px; height: 260px;
     background: radial-gradient(circle, rgba(138,92,246,0.15) 0%, transparent 70%); border-radius: 50%;
 }
+
 
 
 .hero-title {
